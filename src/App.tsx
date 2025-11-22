@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type ElementType } from 'react';
 import { 
-  BookOpen, Users, Scale, History, CheckCircle, MessageCircle, Globe, Play, 
-  ChevronLeft, ChevronRight, Award, HeartHandshake, BrainCircuit, Gavel, Menu, X,
-  AlertTriangle, Mic, Lightbulb, ShieldCheck, FileText, ArrowRight, Star,
+  BookOpen, Users, Scale, History, CheckCircle, Globe, Play, 
+  ChevronRight, HeartHandshake, BrainCircuit, Gavel, Menu, X,
+  Mic, Lightbulb, ArrowRight, Star,
   GraduationCap, Layout, Sparkles, Anchor, Video
 } from 'lucide-react';
 
@@ -90,7 +90,14 @@ const historyData = {
 
 // --- COMPONENTES UI ATÓMICOS (RESPONSIVE) ---
 
-const SectionHeader = ({ title, subtitle, icon: Icon, dark = false }) => (
+interface SectionHeaderProps {
+  title: string;
+  subtitle: string;
+  icon?: ElementType;
+  dark?: boolean;
+}
+
+const SectionHeader = ({ title, subtitle, icon: Icon, dark = false }: SectionHeaderProps) => (
   <div className="text-center mb-12 md:mb-16 relative z-10 px-4">
     <div className={`inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 transition-transform hover:scale-105 ${dark ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-emerald-50 text-emerald-800 border border-emerald-100'}`}>
       {Icon && <Icon className="w-3 h-3 md:w-4 md:h-4" />}
@@ -225,7 +232,7 @@ const Hero = () => (
 );
 
 const TimelineSection = () => {
-  const [activeTab, setActiveTab] = useState('ancient');
+  const [activeTab, setActiveTab] = useState<keyof typeof historyData>('ancient');
 
   return (
     <section className="py-16 md:py-24 px-4 md:px-6 bg-slate-50 relative overflow-hidden" id="historia">

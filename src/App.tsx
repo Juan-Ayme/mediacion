@@ -3,7 +3,8 @@ import {
   BookOpen, Users, Scale, History, CheckCircle, Globe, Play, 
   ChevronRight, HeartHandshake, BrainCircuit, Gavel, Menu, X,
   Mic, Lightbulb, ArrowRight, Star,
-  GraduationCap, Layout, Sparkles, Anchor, Video
+  GraduationCap, Layout, Sparkles, Anchor, Video,
+  Download, Presentation, FileText, Eye
 } from 'lucide-react';
 
 // --- DATOS DEL CONTENIDO ---
@@ -124,18 +125,29 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
   const links = [
     { name: 'Historia', href: '#historia' },
     { name: 'Teoría', href: '#escuelas' },
     { name: 'Proceso', href: '#proceso' },
     { name: 'Comparativo', href: '#comparativo' },
     { name: 'Equipo', href: '#equipo' },
+    { name: 'Recursos', href: '#recursos' },
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-md border-b border-slate-200/50 py-3' : 'bg-transparent py-4 md:py-6'}`}>
-      <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
-        <div className={`flex items-center gap-2 font-black text-lg md:text-xl tracking-tighter transition-colors ${scrolled ? 'text-slate-900' : 'text-white'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled && !isOpen ? 'bg-white/90 backdrop-blur-md border-b border-slate-200/50 py-3' : 'bg-transparent py-4 md:py-6'}`}>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center relative z-50">
+        <div className={`flex items-center gap-2 font-black text-lg md:text-xl tracking-tighter transition-colors ${scrolled && !isOpen ? 'text-slate-900' : 'text-white'}`}>
           <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-1.5 md:p-2 rounded-xl shadow-lg shadow-emerald-500/20">
             <Scale className="w-4 h-4 md:w-5 md:h-5 text-white" />
           </div>
@@ -154,15 +166,12 @@ const Navbar = () => {
           ))}
         </div>
 
-        <button className={`md:hidden p-2 rounded-lg ${scrolled ? 'text-slate-900' : 'text-white'}`} onClick={() => setIsOpen(!isOpen)}>
+        <button className={`md:hidden p-2 rounded-lg transition-colors ${scrolled && !isOpen ? 'text-slate-900' : 'text-white'}`} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X /> : <Menu />}
         </button>
       </div>
       
       <div className={`fixed inset-0 bg-slate-900/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
-        <button className="absolute top-6 right-6 text-white p-2" onClick={() => setIsOpen(false)}>
-            <X className="w-8 h-8" />
-        </button>
         {links.map(link => (
           <a key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="text-2xl md:text-3xl font-black text-white hover:text-emerald-400 transition-colors">
             {link.name}
@@ -336,7 +345,8 @@ const ProcessSection = () => (
             <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-emerald-400 to-teal-500"></div>
             
             <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center relative z-10">
-              <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 bg-slate-50 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-black text-slate-200 group-hover:text-emerald-500 group-hover:bg-emerald-50 transition-all duration-300">
+              {/* Number Circle: Green by default on mobile, Slate on desktop (hover to green) */}
+              <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center text-3xl md:text-4xl font-black transition-all duration-300 bg-emerald-50 text-emerald-500 md:bg-slate-50 md:text-slate-200 md:group-hover:text-emerald-500 md:group-hover:bg-emerald-50">
                 {stage.number}
               </div>
               
@@ -345,7 +355,8 @@ const ProcessSection = () => (
                 <p className="text-sm md:text-base text-slate-500 font-medium">{stage.desc}</p>
                 <div className="flex flex-wrap gap-2 pt-2">
                   {stage.steps.map((step, sIdx) => (
-                    <span key={sIdx} className="px-2 md:px-3 py-1 bg-slate-100 text-slate-600 text-[10px] md:text-xs rounded-lg font-bold uppercase tracking-wide border border-slate-200 group-hover:bg-emerald-50 group-hover:text-emerald-700 group-hover:border-emerald-100 transition-all delay-75">
+                    /* Tags: Green by default on mobile, Slate on desktop (hover to green) */
+                    <span key={sIdx} className="px-2 md:px-3 py-1 text-[10px] md:text-xs rounded-lg font-bold uppercase tracking-wide border transition-all delay-75 bg-emerald-50 text-emerald-700 border-emerald-100 md:bg-slate-100 md:text-slate-600 md:border-slate-200 md:group-hover:bg-emerald-50 md:group-hover:text-emerald-700 md:group-hover:border-emerald-100">
                       {step}
                     </span>
                   ))}
@@ -530,13 +541,14 @@ const ComparisonSection = () => (
 );
 
 const VideosSection = () => (
-  <section className="py-16 md:py-24 px-4 md:px-6 bg-slate-50" id="multimedia">
+  <section className="py-16 md:py-24 px-4 md:px-6 bg-slate-50 overflow-hidden" id="multimedia">
     <div className="max-w-7xl mx-auto">
       <SectionHeader title="Galería Multimedia" subtitle="Recursos Audiovisuales" icon={Video} />
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {/* Container: Horizontal scroll on mobile, Grid on desktop */}
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:overflow-visible md:pb-0 md:mx-0 md:px-0 scrollbar-hide">
         {videoLinks.map((video, idx) => (
-          <div key={idx} className="group relative bg-white rounded-3xl overflow-hidden shadow-xl shadow-slate-200/50 border border-slate-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+          <div key={idx} className="w-[85vw] md:w-auto shrink-0 snap-center group relative bg-white rounded-3xl overflow-hidden shadow-xl shadow-slate-200/50 border border-slate-100 hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-2">
             <div className="aspect-video w-full bg-slate-900 relative">
               <iframe 
                 src={`https://drive.google.com/file/d/${video.id}/preview`} 
@@ -624,6 +636,51 @@ const TeamSection = () => {
   );
 };
 
+const ResourcesSection = () => (
+  <section className="py-16 md:py-24 px-4 md:px-6 bg-slate-900 text-white relative overflow-hidden" id="recursos">
+    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+    <div className="max-w-4xl mx-auto relative z-10">
+      <SectionHeader title="Material de Estudio" subtitle="Descargas" icon={Download} dark />
+      
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* PPT Button */}
+        <div className="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-emerald-500/50 transition-all group flex flex-col items-center text-center">
+          <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Presentation className="w-8 h-8 text-emerald-400" />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Diapositivas del Curso</h3>
+          <p className="text-slate-400 text-sm mb-6">Presentación completa utilizada en las sesiones.</p>
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
+            <a href="/La Mediación _A.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+              <Eye className="w-4 h-4" /> Visualizar
+            </a>
+            <a href="/La Mediación _A.pdf" download className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+              <Download className="w-4 h-4" /> Descargar
+            </a>
+          </div>
+        </div>
+
+        {/* PDF Button */}
+        <div className="bg-slate-800 p-8 rounded-3xl border border-slate-700 hover:border-red-500/50 transition-all group flex flex-col items-center text-center">
+          <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <FileText className="w-8 h-8 text-red-400" />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Guía de Mediación</h3>
+          <p className="text-slate-400 text-sm mb-6">Documento PDF con teoría y casos prácticos.</p>
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
+            <a href="/Trabajo semestral de Teoría del Conflicto y Mecanismos de Resolución.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+              <Eye className="w-4 h-4" /> Visualizar
+            </a>
+            <a href="/Trabajo semestral de Teoría del Conflicto y Mecanismos de Resolución.pdf" download className="flex-1 py-3 bg-red-600 hover:bg-red-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+              <Download className="w-4 h-4" /> Descargar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 // --- APP PRINCIPAL ---
 
 const App = () => {
@@ -666,6 +723,8 @@ const App = () => {
 
       <TeamSection />
       <VideosSection />
+      
+      <ResourcesSection />
       
       <footer className="bg-slate-950 text-slate-500 py-12 md:py-16 px-4 md:px-6 border-t border-slate-900">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">

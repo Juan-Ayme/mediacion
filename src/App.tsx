@@ -69,9 +69,9 @@ const stages = [
 ];
 
 const videoLinks = [
-  { id: "1t37L9NyOd5Ht0e09s4MskBnyDT59n4-S", title: "Video 1: Introducción", desc: "Presentación del tema y el equipo." },
-  { id: "1tHmsfYj3gLWN6BDI_DtFiMoi0E_djH-a", title: "Video 2: Desarrollo", desc: "Análisis profundo del proceso." },
-  { id: "1nGMXbJQQ30GiSID3UN0Kk-ZThXDbt9yn", title: "Video 3: Cierre", desc: "Reflexiones finales y conclusiones." }
+  { id: "1t37L9NyOd5Ht0e09s4MskBnyDT59n4-S", title: "Video 1: Cortometraje", desc: "Video corto explicativo del tema." },
+  { id: "1tHmsfYj3gLWN6BDI_DtFiMoi0E_djH-a", title: "Video 2: Introducción", desc: "Video explicativo de la introducción del tema." },
+  { id: "1nGMXbJQQ30GiSID3UN0Kk-ZThXDbt9yn", title: "Video 3: Mediación vs Conciliación", desc: "Video explicativo sobre la diferencia entre mediación y conciliación." }
 ];
 
 const historyData = {

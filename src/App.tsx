@@ -400,9 +400,9 @@ const ProcessSection = () => (
             transition={{ delay: idx * 0.15 }}
             className="group relative bg-white md:bg-transparent rounded-2xl p-6 md:p-4 shadow-lg md:shadow-none border md:border-none border-zinc-100 flex flex-col items-center text-center z-10 hover:bg-zinc-50 active:bg-zinc-50 active:scale-[0.98] transition-all"
           >
-            <div className="w-20 h-20 rounded-2xl bg-white border-4 border-zinc-50 shadow-xl flex items-center justify-center text-3xl font-black text-zinc-300 group-hover:text-violet-500 group-hover:border-violet-100 transition-all duration-300 mb-6 relative">
+            <div className="w-20 h-20 rounded-2xl bg-white border-4 border-violet-100 md:border-zinc-50 shadow-xl flex items-center justify-center text-3xl font-black text-violet-500 md:text-zinc-300 group-hover:text-violet-500 group-hover:border-violet-100 transition-all duration-300 mb-6 relative">
               {stage.number}
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-1 bg-violet-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-1 bg-violet-500 rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
             
             <h3 className="text-lg font-bold text-zinc-900 mb-2">{stage.title}</h3>
@@ -410,7 +410,7 @@ const ProcessSection = () => (
             
             <div className="flex flex-wrap justify-center gap-1.5">
               {stage.steps.map((step, sIdx) => (
-                <span key={sIdx} className="px-2 py-0.5 text-[10px] rounded-md font-bold uppercase tracking-wide bg-zinc-100 text-zinc-500 border border-zinc-200 group-hover:bg-violet-50 group-hover:text-violet-600 group-hover:border-violet-100 transition-colors">
+                <span key={sIdx} className="px-2 py-0.5 text-[10px] rounded-md font-bold uppercase tracking-wide bg-violet-50 text-violet-600 border-violet-100 md:bg-zinc-100 md:text-zinc-500 md:border-zinc-200 border group-hover:bg-violet-50 group-hover:text-violet-600 group-hover:border-violet-100 transition-colors">
                   {step}
                 </span>
               ))}

@@ -713,7 +713,7 @@ const VideosSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="w-[85vw] md:w-auto shrink-0 snap-center group relative bg-white rounded-3xl overflow-hidden shadow-xl shadow-zinc-200/50 border border-zinc-100 hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-2 cursor-pointer"
+              className="w-[80vw] sm:w-96 md:w-auto shrink-0 snap-center group relative bg-white rounded-3xl overflow-hidden shadow-xl shadow-zinc-200/50 border border-zinc-100 hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-2 cursor-pointer"
               onClick={() => setSelectedVideo(video.id)}
             >
               <div className="aspect-video w-full bg-zinc-900 relative group-hover:opacity-90 transition-opacity">

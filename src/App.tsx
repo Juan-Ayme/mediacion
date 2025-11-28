@@ -318,7 +318,7 @@ const TimelineSection = () => {
                     <div key={idx} className={`flex items-center justify-between flex-col md:flex-row group ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''} animate-fade-in-up`} style={{animationDelay: `${idx * 100}ms`}}>
                         
                         <div className="w-full md:w-5/12 mb-4 md:mb-0">
-                            <div className={`p-6 md:p-8 bg-white rounded-2xl md:rounded-3xl shadow-lg shadow-zinc-200/50 border border-zinc-100 hover:border-violet-200 transition-all duration-300 transform hover:-translate-y-1 ${idx % 2 === 0 ? 'text-left' : 'md:text-right text-left'}`}>
+                            <div className={`p-6 md:p-8 bg-white rounded-2xl md:rounded-3xl shadow-lg shadow-zinc-200/50 border border-zinc-100 hover:border-violet-200 active:border-violet-200 active:scale-[0.98] transition-all duration-300 transform hover:-translate-y-1 ${idx % 2 === 0 ? 'text-left' : 'md:text-right text-left'}`}>
                                 <span className="inline-block px-3 py-1 bg-violet-100 text-violet-700 rounded-lg text-xs md:text-sm font-black mb-3">{item.year}</span>
                                 <h3 className="text-lg md:text-xl font-bold text-zinc-900 mb-2">{item.title}</h3>
                                 <p className="text-zinc-600 leading-relaxed text-sm">{item.desc}</p>
@@ -352,7 +352,7 @@ const SchoolsSection = () => (
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="group relative bg-zinc-800 rounded-[2rem] p-6 md:p-8 border border-zinc-700/50 hover:bg-zinc-800/80 transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+            className="group relative bg-zinc-800 rounded-[2rem] p-6 md:p-8 border border-zinc-700/50 hover:bg-zinc-800/80 active:bg-zinc-800/80 active:scale-[0.98] transition-all duration-500 hover:-translate-y-2 overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-violet-500/20 transition-all duration-500"></div>
             
@@ -398,7 +398,7 @@ const ProcessSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.15 }}
-            className="group relative bg-white md:bg-transparent rounded-2xl p-6 md:p-4 shadow-lg md:shadow-none border md:border-none border-zinc-100 flex flex-col items-center text-center z-10 hover:bg-zinc-50 transition-colors"
+            className="group relative bg-white md:bg-transparent rounded-2xl p-6 md:p-4 shadow-lg md:shadow-none border md:border-none border-zinc-100 flex flex-col items-center text-center z-10 hover:bg-zinc-50 active:bg-zinc-50 active:scale-[0.98] transition-all"
           >
             <div className="w-20 h-20 rounded-2xl bg-white border-4 border-zinc-50 shadow-xl flex items-center justify-center text-3xl font-black text-zinc-300 group-hover:text-violet-500 group-hover:border-violet-100 transition-all duration-300 mb-6 relative">
               {stage.number}
@@ -713,7 +713,7 @@ const VideosSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="w-[80vw] sm:w-96 md:w-auto shrink-0 snap-center group relative bg-white rounded-3xl overflow-hidden shadow-xl shadow-zinc-200/50 border border-zinc-100 hover:shadow-2xl transition-all duration-500 md:hover:-translate-y-2 cursor-pointer"
+              className="w-[80vw] sm:w-96 md:w-auto shrink-0 snap-center group relative bg-white rounded-3xl overflow-hidden shadow-xl shadow-zinc-200/50 border border-zinc-100 hover:shadow-2xl active:scale-[0.98] transition-all duration-500 md:hover:-translate-y-2 cursor-pointer"
               onClick={() => setSelectedVideo(video.id)}
             >
               <div className="aspect-video w-full bg-zinc-900 relative group-hover:opacity-90 transition-opacity">

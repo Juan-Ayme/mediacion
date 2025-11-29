@@ -5,7 +5,7 @@ import {
   ChevronRight, HeartHandshake, BrainCircuit, Gavel, Menu, X,
   Mic, Lightbulb, ArrowRight, Star,
   GraduationCap, Layout, Sparkles, Video,
-  Download, Presentation, FileText, Eye, Folder, ClipboardCheck
+  Download, Presentation, FileText, Eye, Folder, ClipboardCheck, ExternalLink
 } from 'lucide-react';
 
 // --- DATOS DEL CONTENIDO ---
@@ -672,24 +672,44 @@ const VideoModal = ({ videoId, isOpen, onClose }: { videoId: string | null, isOp
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-zinc-800"
+          className="relative w-full max-w-4xl bg-zinc-900 rounded-2xl overflow-hidden shadow-2xl border border-zinc-800 flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
-          <button 
-            onClick={onClose}
-            className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          <iframe 
-            src={`https://drive.google.com/file/d/${videoId}/preview`} 
-            width="100%" 
-            height="100%" 
-            allow="autoplay; fullscreen" 
-            allowFullScreen
-            className="absolute inset-0 border-0"
-            title="Video Player"
-          ></iframe>
+          <div className="relative aspect-video bg-black w-full">
+            <button 
+                onClick={onClose}
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full transition-colors"
+            >
+                <X className="w-6 h-6" />
+            </button>
+            <iframe 
+                src={`https://drive.google.com/file/d/${videoId}/preview`} 
+                width="100%" 
+                height="100%" 
+                allow="autoplay; fullscreen" 
+                allowFullScreen
+                className="absolute inset-0 border-0"
+                title="Video Player"
+            ></iframe>
+          </div>
+          
+          <div className="p-4 md:p-6 bg-zinc-900 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-zinc-400">
+                <div className="p-2 bg-zinc-800 rounded-full">
+                    <Video className="w-5 h-5" />
+                </div>
+                <p className="text-sm font-medium">¿Problemas para reproducir?</p>
+            </div>
+            <a 
+                href={`https://drive.google.com/file/d/${videoId}/view`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-2 px-6 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold text-sm transition-colors shadow-lg shadow-violet-900/20"
+            >
+                <ExternalLink className="w-4 h-4" />
+                Ver en Google Drive
+            </a>
+          </div>
         </motion.div>
       </motion.div>
     )}

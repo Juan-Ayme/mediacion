@@ -1,11 +1,11 @@
 import { useState, useEffect, type ElementType } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { 
   BookOpen, Users, Scale, History, CheckCircle, Globe, Play, 
   ChevronRight, HeartHandshake, BrainCircuit, Gavel, Menu, X,
   Mic, Lightbulb, ArrowRight, Star,
   GraduationCap, Layout, Sparkles, Video,
-  Download, Presentation, FileText, Eye, Folder, ClipboardCheck, ExternalLink, Image as ImageIcon, ZoomIn
+  Download, Presentation, FileText, Eye, Folder, ClipboardCheck, ExternalLink, Image as ImageIcon, ZoomIn, ArrowUp
 } from 'lucide-react';
 
 // --- DATOS DEL CONTENIDO ---
@@ -115,6 +115,114 @@ const historyData = {
     { year: "1976", title: "Conf. Pound", desc: "Nace el movimiento ADR (Resolución Alternativa) ante la saturación judicial." },
     { year: "1980s", title: "Europa", desc: "Recomendaciones del Consejo de Europa. Inicio en España (País Vasco)." }
   ]
+};
+
+
+
+// --- NUEVOS COMPONENTES UI/UX ---
+
+const ScrollProgress = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-indigo-500 origin-left z-[100]"
+      style={{ scaleX }}
+    />
+  );
+};
+
+const BackToTop = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 p-4 bg-violet-600 hover:bg-violet-500 text-white rounded-full shadow-lg shadow-violet-900/30 transition-colors"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const TypewriterText = ({ text }: { text: string }) => {
+  const letters = Array.from(text);
+
+  const container = {
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.03, delayChildren: 0.04 * i },
+    }),
+  };
+
+  const child = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        damping: 12,
+        stiffness: 100,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        type: "spring" as const,
+        damping: 12,
+        stiffness: 100,
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      style={{ overflow: "hidden", display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+    >
+      {letters.map((letter, index) => (
+        <motion.span variants={child} key={index}>
+          {letter === " " ? "\u00A0" : letter}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
 };
 
 // --- COMPONENTES UI ATÓMICOS (RESPONSIVE) ---
@@ -243,9 +351,9 @@ const Hero = () => (
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-300 to-indigo-400">Resolución</span>
         </h1>
         
-        <p className="text-base md:text-xl text-zinc-400 max-w-lg mx-auto lg:mx-0 leading-relaxed font-light">
-          Un enfoque humano y estratégico para transformar conflictos en oportunidades. Teoría, práctica y normativa.
-        </p>
+        <div className="text-base md:text-xl text-zinc-400 max-w-lg mx-auto lg:mx-0 leading-relaxed font-light">
+          <TypewriterText text="Un enfoque humano y estratégico para transformar conflictos en oportunidades. Teoría, práctica y normativa." />
+        </div>
 
         <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
           <a href="#historia" className="px-6 md:px-8 py-3 md:py-4 bg-violet-500 hover:bg-violet-400 text-zinc-900 font-black rounded-2xl shadow-lg shadow-violet-500/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-sm md:text-base">
@@ -1130,6 +1238,8 @@ const ResourcesSection = () => (
 const App = () => {
   return (
     <div className="font-sans antialiased text-zinc-600 selection:bg-violet-500 selection:text-white bg-white">
+      <ScrollProgress />
+      <BackToTop />
       <Navbar />
       <Hero />
       <TimelineSection />

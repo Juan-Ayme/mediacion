@@ -99,6 +99,12 @@ const videoLinks = [
     title: "Video 5: Bloopers", 
     desc: "Momentos divertidos detrás de cámaras.",
     thumbnail: "https://img.youtube.com/vi/yVmNQHQIsg8/hqdefault.jpg"
+  },
+  { 
+    id: "XgPljuxm1I0", 
+    title: "Video 6: Docente Explicando", 
+    desc: "Explicación del tema.",
+    thumbnail: "https://img.youtube.com/vi/XgPljuxm1I0/hqdefault.jpg"
   }
 ];
 
@@ -912,6 +918,10 @@ const GallerySection = () => {
     { src: "/fotos/Foto_del_campo.jpeg", title: "Trabajo de Campo" },
     { src: "/fotos/Foto_Lugar.jpeg", title: "Locación" },
     { src: "/fotos/Foto_produccion.jpeg", title: "Producción" },
+    { src: "/fotos/Foto_en_aula.jpeg", title: "Momento en Aula"},
+    { src: "/fotos/Foto_grupal.jpeg", title: "Momento Grupal"},
+    { src: "/fotos/Foto_practica.jpeg", title: "Momento de la practica"},
+    { src: "/fotos/Fotos_aula.jpeg", title: "Momento en Aula"}
   ];
 
   return (
@@ -1151,10 +1161,10 @@ const ResourcesSection = () => (
           <h3 className="text-xl font-bold mb-2">Acta Final</h3>
           <p className="text-zinc-400 text-sm mb-6">Modelo de acta de conciliación/mediación.</p>
           <div className="flex flex-col sm:flex-row gap-3 w-full">
-            <a href="/documentos/ACTA DE CONCILIACIÓN N° 2314-1.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+            <a href="/documentos/ACTA DE CONCILIACIÓN N° 2314.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
               <Eye className="w-4 h-4" /> Ver
             </a>
-            <a href="/documentos/ACTA DE CONCILIACIÓN N° 2314-1.pdf" download className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+            <a href="/documentos/ACTA DE CONCILIACIÓN N° 2314.pdf" download className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
               <Download className="w-4 h-4" /> Bajar
             </a>
           </div>

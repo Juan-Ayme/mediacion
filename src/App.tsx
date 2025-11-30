@@ -5,7 +5,7 @@ import {
   ChevronRight, HeartHandshake, BrainCircuit, Gavel, Menu, X,
   Mic, Lightbulb, ArrowRight, Star,
   GraduationCap, Layout, Sparkles, Video,
-  Download, Presentation, FileText, Eye, Folder, ClipboardCheck, ExternalLink
+  Download, Presentation, FileText, Eye, Folder, ClipboardCheck, ExternalLink, Image as ImageIcon, ZoomIn
 } from 'lucide-react';
 
 // --- DATOS DEL CONTENIDO ---
@@ -87,6 +87,18 @@ const videoLinks = [
     title: "Video 3: Mediación vs Conciliación", 
     desc: "Video explicativo sobre la diferencia entre mediación y conciliación.",
     thumbnail: "https://lh3.googleusercontent.com/d/1nGMXbJQQ30GiSID3UN0Kk-ZThXDbt9yn=w800"
+  },
+  { 
+    id: "1EdSUrjQIyMR3syiK7UMtciMailNydweU", 
+    title: "Video 4: Mediación en Quechua", 
+    desc: "Video de la mediación en quechua.",
+    thumbnail: "https://lh3.googleusercontent.com/d/1EdSUrjQIyMR3syiK7UMtciMailNydweU=w800"
+  },
+  { 
+    id: "1Nqil3dijVxV7jf_5NaORGJJ4m36apEqN", 
+    title: "Video 5: Bloopers", 
+    desc: "Momentos divertidos detrás de cámaras.",
+    thumbnail: "https://lh3.googleusercontent.com/d/1Nqil3dijVxV7jf_5NaORGJJ4m36apEqN=w800"
   }
 ];
 
@@ -156,6 +168,7 @@ const Navbar = () => {
     { name: 'Teoría', href: '#escuelas' },
     { name: 'Proceso', href: '#proceso' },
     { name: 'Comparación', href: '#comparativo' },
+    { name: 'Galería', href: '#galeria' },
     { name: 'Recursos', href: '#recursos' },
     { name: 'Equipo', href: '#equipo' },
   ];
@@ -778,6 +791,85 @@ const VideosSection = () => {
   );
 };
 
+const GallerySection = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const images = [
+    { src: "/fotos/elaboracion_de_monografia.jpeg", title: "Elaboración de Monografía" },
+    { src: "/fotos/Elaboracion_manual.jpeg", title: "Elaboración Manual" },
+    { src: "/fotos/Elavoracion_manual_2.jpeg", title: "Proceso Creativo" },
+    { src: "/fotos/Foto_actores.jpeg", title: "Actores en Escena" },
+    { src: "/fotos/Foto_Casual.jpeg", title: "Momento Casual" },
+    { src: "/fotos/Foto_de_la_pareja_actores.jpeg", title: "Pareja de Actores" },
+    { src: "/fotos/Foto_del_campo.jpeg", title: "Trabajo de Campo" },
+    { src: "/fotos/Foto_Lugar.jpeg", title: "Locación" },
+    { src: "/fotos/Foto_produccion.jpeg", title: "Producción" },
+  ];
+
+  return (
+    <section className="py-16 md:py-24 px-4 md:px-6 bg-zinc-900 text-white" id="galeria">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeader title="Galería de Fotos" subtitle="Momentos Capturados" icon={ImageIcon} dark />
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {images.map((img, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.05 }}
+              className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer group"
+              onClick={() => setSelectedImage(img.src)}
+            >
+              <img 
+                src={img.src} 
+                alt={img.title} 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                 <ZoomIn className="w-8 h-8 text-white" />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                <p className="text-sm font-bold text-white">{img.title}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/95 p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button 
+                className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"
+                onClick={() => setSelectedImage(null)}
+            >
+                <X className="w-8 h-8" />
+            </button>
+            <motion.img 
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              src={selectedImage} 
+              alt="Full size" 
+              className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
+
 const TeamSection = () => {
   const [activeMember, setActiveMember] = useState(0);
 
@@ -913,25 +1005,6 @@ const ResourcesSection = () => (
           </div>
         </motion.div>
 
-        {/* Proceso Folder */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="bg-zinc-800 p-8 rounded-3xl border border-zinc-700 hover:border-blue-500/50 transition-all group flex flex-col items-center text-center"
-        >
-          <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <Layout className="w-8 h-8 text-blue-400" />
-          </div>
-          <h3 className="text-xl font-bold mb-2">Carpeta del Proceso</h3>
-          <p className="text-zinc-400 text-sm mb-6">Documentación detallada de las etapas.</p>
-          <div className="flex flex-col sm:flex-row gap-3 w-full">
-             <button className="flex-1 py-3 bg-zinc-700/50 text-zinc-500 rounded-xl font-bold cursor-not-allowed flex items-center justify-center gap-2">
-              <Folder className="w-4 h-4" /> Próximamente
-            </button>
-          </div>
-        </motion.div>
 
         {/* Expediente Folder */}
         <motion.div 
@@ -947,9 +1020,12 @@ const ResourcesSection = () => (
           <h3 className="text-xl font-bold mb-2">Expediente Completo</h3>
           <p className="text-zinc-400 text-sm mb-6">Recopilación de todos los actuados.</p>
           <div className="flex flex-col sm:flex-row gap-3 w-full">
-             <button className="flex-1 py-3 bg-zinc-700/50 text-zinc-500 rounded-xl font-bold cursor-not-allowed flex items-center justify-center gap-2">
-              <Folder className="w-4 h-4" /> Próximamente
-            </button>
+            <a href="/documentos/EXP. N° 023-2025-CCAY.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+              <Eye className="w-4 h-4" /> Ver
+            </a>
+            <a href="/documentos/EXP. N° 023-2025-CCAY.pdf" download className="flex-1 py-3 bg-yellow-600 hover:bg-yellow-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+              <Download className="w-4 h-4" /> Bajar
+            </a>
           </div>
         </motion.div>
 
@@ -967,9 +1043,81 @@ const ResourcesSection = () => (
           <h3 className="text-xl font-bold mb-2">Acta Final</h3>
           <p className="text-zinc-400 text-sm mb-6">Modelo de acta de conciliación/mediación.</p>
           <div className="flex flex-col sm:flex-row gap-3 w-full">
-             <button className="flex-1 py-3 bg-zinc-700/50 text-zinc-500 rounded-xl font-bold cursor-not-allowed flex items-center justify-center gap-2">
-              <Folder className="w-4 h-4" /> Próximamente
-            </button>
+            <a href="/documentos/ACTA DE CONCILIACIÓN N° 2314-1.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+              <Eye className="w-4 h-4" /> Ver
+            </a>
+            <a href="/documentos/ACTA DE CONCILIACIÓN N° 2314-1.pdf" download className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+              <Download className="w-4 h-4" /> Bajar
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Tríptico */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6 }}
+          className="bg-zinc-800 p-8 rounded-3xl border border-zinc-700 hover:border-orange-500/50 transition-all group flex flex-col items-center text-center"
+        >
+          <div className="w-16 h-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <FileText className="w-8 h-8 text-orange-400" />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Tríptico Informativo</h3>
+          <p className="text-zinc-400 text-sm mb-6">Resumen visual de la mediación.</p>
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
+            <a href="/documentos/Tríptico de la mediación-1.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+              <Eye className="w-4 h-4" /> Ver
+            </a>
+            <a href="/documentos/Tríptico de la mediación-1.pdf" download className="flex-1 py-3 bg-orange-600 hover:bg-orange-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+              <Download className="w-4 h-4" /> Bajar
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Etapas Intercultural */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.7 }}
+          className="bg-zinc-800 p-8 rounded-3xl border border-zinc-700 hover:border-pink-500/50 transition-all group flex flex-col items-center text-center"
+        >
+          <div className="w-16 h-16 bg-pink-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Globe className="w-8 h-8 text-pink-400" />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Mediación Intercultural</h3>
+          <p className="text-zinc-400 text-sm mb-6">Etapas adaptadas a contextos diversos.</p>
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
+            <a href="/documentos/Etapas de la mediación intercultural-1.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+              <Eye className="w-4 h-4" /> Ver
+            </a>
+            <a href="/documentos/Etapas de la mediación intercultural-1.pdf" download className="flex-1 py-3 bg-pink-600 hover:bg-pink-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+              <Download className="w-4 h-4" /> Bajar
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Aportes Creativos */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.8 }}
+          className="bg-zinc-800 p-8 rounded-3xl border border-zinc-700 hover:border-cyan-500/50 transition-all group flex flex-col items-center text-center"
+        >
+          <div className="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Sparkles className="w-8 h-8 text-cyan-400" />
+          </div>
+          <h3 className="text-xl font-bold mb-2">Aportes Creativos</h3>
+          <p className="text-zinc-400 text-sm mb-6">Innovaciones del grupo.</p>
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
+            <a href="/documentos/APORTES CREATIVOS.pdf" target="_blank" rel="noopener noreferrer" className="flex-1 py-3 bg-zinc-700 hover:bg-zinc-600 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 text-white">
+              <Eye className="w-4 h-4" /> Ver
+            </a>
+            <a href="/documentos/APORTES CREATIVOS.pdf" download className="flex-1 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+              <Download className="w-4 h-4" /> Bajar
+            </a>
           </div>
         </motion.div>
       </div>
@@ -1046,6 +1194,8 @@ const App = () => {
 
       <VideosSection />
       
+      <GallerySection />
+
       <ResourcesSection />
 
       <TeamSection />

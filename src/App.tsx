@@ -71,34 +71,34 @@ const stages = [
 
 const videoLinks = [
   { 
-    id: "1t37L9NyOd5Ht0e09s4MskBnyDT59n4-S", 
+    id: "aPvic3slIqs", 
     title: "Video 1: Cortometraje", 
     desc: "Video corto explicativo del tema.",
-    thumbnail: "https://lh3.googleusercontent.com/d/1t37L9NyOd5Ht0e09s4MskBnyDT59n4-S=w800"
+    thumbnail: "https://img.youtube.com/vi/aPvic3slIqs/maxresdefault.jpg"
   },
   { 
-    id: "1tHmsfYj3gLWN6BDI_DtFiMoi0E_djH-a", 
+    id: "jdewKdCjpL4", 
     title: "Video 2: Introducción", 
     desc: "Video explicativo de la introducción del tema.",
-    thumbnail: "https://lh3.googleusercontent.com/d/1tHmsfYj3gLWN6BDI_DtFiMoi0E_djH-a=w800"
+    thumbnail: "https://img.youtube.com/vi/jdewKdCjpL4/hqdefault.jpg"
   },
   { 
-    id: "1nGMXbJQQ30GiSID3UN0Kk-ZThXDbt9yn", 
+    id: "eE8GHeOTbAM", 
     title: "Video 3: Mediación vs Conciliación", 
     desc: "Video explicativo sobre la diferencia entre mediación y conciliación.",
-    thumbnail: "https://lh3.googleusercontent.com/d/1nGMXbJQQ30GiSID3UN0Kk-ZThXDbt9yn=w800"
+    thumbnail: "https://img.youtube.com/vi/eE8GHeOTbAM/hqdefault.jpg"
   },
   { 
-    id: "1EdSUrjQIyMR3syiK7UMtciMailNydweU", 
+    id: "ZsA8c1IVvZE", 
     title: "Video 4: Mediación en Quechua", 
     desc: "Video de la mediación en quechua.",
-    thumbnail: "https://lh3.googleusercontent.com/d/1EdSUrjQIyMR3syiK7UMtciMailNydweU=w800"
+    thumbnail: "https://img.youtube.com/vi/ZsA8c1IVvZE/maxresdefault.jpg"
   },
   { 
-    id: "1Nqil3dijVxV7jf_5NaORGJJ4m36apEqN", 
+    id: "yVmNQHQIsg8", 
     title: "Video 5: Bloopers", 
     desc: "Momentos divertidos detrás de cámaras.",
-    thumbnail: "https://lh3.googleusercontent.com/d/1Nqil3dijVxV7jf_5NaORGJJ4m36apEqN=w800"
+    thumbnail: "https://img.youtube.com/vi/yVmNQHQIsg8/hqdefault.jpg"
   }
 ];
 
@@ -804,10 +804,10 @@ const VideoModal = ({ videoId, isOpen, onClose }: { videoId: string | null, isOp
                 <X className="w-6 h-6" />
             </button>
             <iframe 
-                src={`https://drive.google.com/file/d/${videoId}/preview`} 
+                src={`https://www.youtube.com/embed/${videoId}`} 
                 width="100%" 
                 height="100%" 
-                allow="autoplay; fullscreen" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
                 className="absolute inset-0 border-0"
                 title="Video Player"
@@ -822,13 +822,13 @@ const VideoModal = ({ videoId, isOpen, onClose }: { videoId: string | null, isOp
                 <p className="text-sm font-medium">¿Problemas para reproducir?</p>
             </div>
             <a 
-                href={`https://drive.google.com/file/d/${videoId}/view`} 
+                href={`https://www.youtube.com/watch?v=${videoId}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="flex items-center gap-2 px-6 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl font-bold text-sm transition-colors shadow-lg shadow-violet-900/20"
+                className="flex items-center gap-2 px-6 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold text-sm transition-colors shadow-lg shadow-red-900/20"
             >
                 <ExternalLink className="w-4 h-4" />
-                Ver en Google Drive
+                Ver en YouTube
             </a>
           </div>
         </motion.div>
